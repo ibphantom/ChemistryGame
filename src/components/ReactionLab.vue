@@ -14,8 +14,8 @@ interface Reaction {
   reactants: string[];
   products: string[];
   conditions: {
-    temperature: number;     // Keep as 'number'
-    pressure: number;        // Keep as 'number'
+    temperature: string;
+    pressure: string;
     catalyst: string | null;
   };
 }
