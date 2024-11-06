@@ -1,11 +1,5 @@
 <!-- src/components/ReactionLab.vue -->
 
-<template>
-  <div class="reaction-lab">
-    <!-- Reaction lab UI elements -->
-  </div>
-</template>
-
 <script lang="ts">
 import { defineComponent } from 'vue';
 import reactionsData from '@/data/reactions.json';
@@ -14,9 +8,9 @@ interface Reaction {
   reactants: string[];
   products: string[];
   conditions: {
-    temperature: number;
-    pressure: number;
-    catalyst: string;
+    temperature: string;     // Changed to 'string' to match data
+    pressure: string;        // Changed to 'string' to match data
+    catalyst: string | null; // Ensure null is acceptable
   };
 }
 
@@ -36,9 +30,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.reaction-lab {
-  padding: 10px;
-}
-</style>
