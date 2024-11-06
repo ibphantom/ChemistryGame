@@ -1,80 +1,71 @@
+// webpack.config.js
+
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { GenerateSW } = require('workbox-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
   entry: './src/main.ts',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.js', '.vue'],
     alias: {
-      vue$: 'vue/dist/vue.esm-bundler.js',
       '@': path.resolve(__dirname, 'src'),
-      '@assets': path.resolve(__dirname, 'src/assets')
-    }
+      '@assets': path.resolve(__dirname, 'public/assets'),
+    },
   },
   module: {
     rules: [
+      // TypeScript and Vue handling
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
       {
         test: /\.ts$/,
+        loader: 'ts-loader',
+        options: { appendTsSuffixTo: [/\.vue$/] },
         exclude: /node_modules/,
-        use: [
-          'babel-loader',
-          {
-            loader: 'ts-loader',
-            options: { appendTsSuffixTo: [/\.vue$/] }
-          }
-        ]
       },
+      // Asset handling
       {
-        test: /\.(png|jpg|gif|svg|glb|gltf|obj|fbx)$/,
+        test: /\.(png|jpe?g|gif|svg|mp3|glb|gltf)$/,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/[hash][ext][query]'
-        }
+          filename: 'assets/[name][ext]',
+        },
       },
+      // Web Worker handling
       {
         test: /\.worker\.ts$/,
         use: [
           {
             loader: 'worker-loader',
-            options: { filename: 'workers/[name].[hash].js' }
+            options: { filename: 'workers/[name].[hash].js' },
           },
-          'ts-loader'
-        ]
+          'ts-loader',
+        ],
       },
-      {
-        test: /\.s[ac]ss$/i,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
-      }
-    ]
+    ],
   },
   plugins: [
     new VueLoaderPlugin(),
     new GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
-      maximumFileSizeToCacheInBytes: 5 * 1024 * 1024 // 5MB
+      navigateFallback: '/index.html',
     }),
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: false
-    })
   ],
   devServer: {
     static: path.join(__dirname, 'public'),
+    historyApiFallback: true,
     compress: true,
     port: 8080,
-    hot: true,
-    open: true
+    open: true,
   },
-  mode: 'development'
+  mode: 'development',
 };
