@@ -6,7 +6,7 @@ const world = new CANNON.World();
 world.gravity.set(0, -9.82, 0); // Set gravity
 
 self.addEventListener('message', (event) => {
-  const { action, data } = event.data;
+  const { action } = event.data;
 
   switch (action) {
     case 'init':
@@ -22,3 +22,6 @@ self.addEventListener('message', (event) => {
       break;
   }
 });
+
+// Required to make TypeScript recognize 'self' in a worker context
+export default null as any;
