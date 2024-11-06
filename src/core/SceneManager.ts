@@ -20,7 +20,6 @@ export class SceneManager {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    // Additional initialization if needed
   }
 
   initScene() {
