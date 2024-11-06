@@ -1,40 +1,45 @@
+// src/core/Loader.ts
+
 import * as THREE from 'three';
 
 export class Loader {
-  private loadingManager: THREE.LoadingManager;
-  private textureLoader: THREE.TextureLoader;
-  private gltfLoader: any; // If using GLTFLoader
+  private textureLoader = new THREE.TextureLoader();
+  private gltfLoader = new THREE.GLTFLoader();
 
-  constructor() {
-    this.loadingManager = new THREE.LoadingManager();
-    this.textureLoader = new THREE.TextureLoader(this.loadingManager);
-    // Initialize other loaders as needed
-    // For example, GLTFLoader
-    // this.gltfLoader = new GLTFLoader(this.loadingManager);
-  }
-
-  loadTexture(url: string): Promise<THREE.Texture> {
-    return new Promise((resolve, reject) => {
+  loadTexture(path: string): Promise<THREE.Texture> {
+    return new Promise((resolve) => {
       this.textureLoader.load(
-        url,
-        texture => resolve(texture),
+        path,
+        (texture) => resolve(texture),
         undefined,
-        err => reject(err)
+        () => {
+          // Asset not found, use a placeholder texture
+          const placeholder = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+          const texture = new THREE.Texture();
+          texture.image = placeholder;
+          texture.needsUpdate = true;
+          resolve(texture);
+        }
       );
     });
   }
 
-  // Example method to load a GLTF model
-  /*
-  loadModel(url: string): Promise<THREE.Group> {
-    return new Promise((resolve, reject) => {
+  loadModel(path: string): Promise<THREE.Group> {
+    return new Promise((resolve) => {
       this.gltfLoader.load(
-        url,
-        gltf => resolve(gltf.scene),
+        path,
+        (gltf) => resolve(gltf.scene),
         undefined,
-        err => reject(err)
+        () => {
+          // Asset not found, use a placeholder geometry
+          const geometry = new THREE.BoxGeometry(1, 1, 1);
+          const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+          const placeholder = new THREE.Mesh(geometry, material);
+          const group = new THREE.Group();
+          group.add(placeholder);
+          resolve(group);
+        }
       );
     });
   }
-  */
 }
