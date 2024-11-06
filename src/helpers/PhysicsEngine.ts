@@ -1,3 +1,5 @@
+// src/helpers/PhysicsEngine.ts
+
 export class PhysicsEngine {
   private worker: Worker;
 
@@ -6,17 +8,16 @@ export class PhysicsEngine {
     this.worker.onmessage = this.onWorkerMessage;
   }
 
-  start() {
-    // Start the worker
+  init() {
+    this.worker.postMessage({ action: 'init' });
   }
 
   update() {
-    // Send data to the worker
-    this.worker.postMessage({ /* data */ });
+    this.worker.postMessage({ action: 'update' });
   }
 
   private onWorkerMessage = (event: MessageEvent) => {
     const data = event.data;
-    // Update physics state in the main thread
+    // Update objects in the scene with new physics data
   };
 }
