@@ -16,12 +16,13 @@ self.addEventListener('message', (event) => {
       // Update physics simulation
       world.step(1 / 60);
       // Send updated positions back to main thread
-      self.postMessage({ positions: /* updated positions */ });
+      const positions = {}; // Replace with actual positions data
+      self.postMessage({ positions });
       break;
     default:
       break;
   }
 });
 
-// Required to make TypeScript recognize 'self' in a worker context
+// Required for TypeScript module resolution
 export {};
