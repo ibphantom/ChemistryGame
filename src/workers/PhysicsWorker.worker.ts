@@ -10,7 +10,7 @@ self.addEventListener('message', (event) => {
 
   switch (action) {
     case 'init':
-      // Initialize physics objects
+      // Initialize physics objects if needed
       break;
     case 'update':
       // Update physics simulation
