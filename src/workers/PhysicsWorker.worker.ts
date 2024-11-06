@@ -1,14 +1,24 @@
+// src/workers/PhysicsWorker.worker.ts
+
 import * as CANNON from 'cannon-es';
 
-self.addEventListener('message', event => {
-  const data = event.data;
-  // Initialize physics world
-  const world = new CANNON.World();
-  world.gravity.set(0, -9.82, 0);
+const world = new CANNON.World();
+world.gravity.set(0, -9.82, 0); // Set gravity
 
-  // Perform physics simulation steps
-  world.step(1 / 60);
+self.addEventListener('message', (event) => {
+  const { action, data } = event.data;
 
-  // Post updated physics data back to the main thread
-  self.postMessage({ /* physics data */ });
+  switch (action) {
+    case 'init':
+      // Initialize physics objects
+      break;
+    case 'update':
+      // Update physics simulation
+      world.step(1 / 60);
+      // Send updated positions back to main thread
+      self.postMessage({ positions: /* updated positions */ });
+      break;
+    default:
+      break;
+  }
 });
