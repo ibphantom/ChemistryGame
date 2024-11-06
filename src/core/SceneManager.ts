@@ -1,10 +1,13 @@
+// src/core/SceneManager.ts
+
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export class SceneManager {
   public scene: THREE.Scene;
   public camera: THREE.PerspectiveCamera;
-  private controls: OrbitControls;
+  public renderer: THREE.WebGLRenderer;
+  public controls: OrbitControls;
 
   constructor() {
     this.scene = new THREE.Scene();
@@ -14,19 +17,13 @@ export class SceneManager {
       0.1,
       1000
     );
-    this.camera.position.z = 5;
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    // Additional initialization if needed
   }
 
   initScene() {
-    // Add lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    this.scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(10, 10, 10);
-    this.scene.add(directionalLight);
-
-    // Initialize controls
-    this.controls = new OrbitControls(this.camera, document.body);
+    // Initialize the scene
   }
 }
