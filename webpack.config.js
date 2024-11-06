@@ -9,9 +9,10 @@ module.exports = {
   mode: 'production',
   entry: './src/main.ts',
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle.[contenthash].js', // Use content hashing for cache busting
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
+    clean: true, // Clean the output directory before emit
   },
   experiments: {
     topLevelAwait: true,
@@ -34,15 +35,7 @@ module.exports = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              appendTsSuffixTo: [/\.vue$/],
-              transpileOnly: true,
-            },
-          },
-        ],
+        use: 'ts-loader',
       },
       // CSS Loader
       {
@@ -59,13 +52,18 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|glb|gltf)$/,
         type: 'asset/resource',
       },
-      // Web Worker Loader (built-in)
+      // Web Worker Loader
       {
         test: /\.worker\.ts$/,
-        loader: 'ts-loader',
-        options: {
-          transpileOnly: true,
-        },
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              filename: '[name].[contenthash].js',
+            },
+          },
+          'ts-loader',
+        ],
       },
     ],
   },
