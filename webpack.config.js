@@ -36,7 +36,7 @@ module.exports = {
             loader: 'ts-loader',
             options: {
               appendTsSuffixTo: [/\.vue$/],
-              transpileOnly: true, // Add this line if necessary
+              transpileOnly: true,
             },
           },
         ],
@@ -59,13 +59,21 @@ module.exports = {
       // Worker Loader
       {
         test: /\.worker\.ts$/,
-        use: {
-          loader: 'worker-loader',
-          options: {
-            filename: '[name].[contenthash].js',
-            esModule: false, // Ensure compatibility
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              filename: '[name].[contenthash].js',
+              esModule: false,
+            },
           },
-        },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
+          },
+        ],
       },
     ],
   },
