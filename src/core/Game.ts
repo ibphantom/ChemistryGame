@@ -8,6 +8,15 @@ import { Atom } from '@/components/Atom';
 import { Molecule } from '@/components/Molecule';
 import elementsData from '@/data/elements.json';
 
+interface ElementData {
+  atomicNumber: number;
+  symbol: string;
+  name: string;
+  color: string;
+  radius: number;
+  valency: number;
+}
+
 export class Game {
   private canvas: HTMLCanvasElement;
   private renderer: Renderer;
@@ -45,8 +54,8 @@ export class Game {
     const molecule = new Molecule();
 
     // Example: Create a water molecule (H2O)
-    const hydrogenData = elementsData.find((el) => el.symbol === 'H');
-    const oxygenData = elementsData.find((el) => el.symbol === 'O');
+    const hydrogenData = elementsData.find((el: ElementData) => el.symbol === 'H');
+    const oxygenData = elementsData.find((el: ElementData) => el.symbol === 'O');
 
     if (hydrogenData && oxygenData) {
       const oxygen = new Atom(oxygenData);
