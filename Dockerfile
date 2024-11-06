@@ -1,7 +1,5 @@
-# Dockerfile
-
 # Stage 1: Build the application
-FROM node:14 AS build
+FROM node:14 as build
 
 WORKDIR /app
 
@@ -13,10 +11,10 @@ COPY . .
 
 RUN npm run build
 
-# Stage 2: Serve the app with Nginx
+# Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
-COPY --from=build /app/public /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
