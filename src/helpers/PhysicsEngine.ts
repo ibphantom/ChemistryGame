@@ -1,6 +1,6 @@
 // src/helpers/PhysicsEngine.ts
 
-import PhysicsWorker from '@/workers/PhysicsWorker.worker.ts';
+import PhysicsWorker from '@/workers/PhysicsWorker.worker.ts?worker';
 
 export class PhysicsEngine {
   private worker: Worker;
