@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "webworker"],
+    "moduleResolution": "bundler",
     "allowJs": true,
     "jsx": "preserve",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
