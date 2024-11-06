@@ -3,13 +3,14 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
   entry: './src/main.ts',
   output: {
-    filename: 'bundle.[contenthash].js', // Use content hashing for cache busting
+    filename: 'bundle.js', // Keep the filename as 'bundle.js' since your index.html references it
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     clean: true, // Clean the output directory before emit
@@ -69,6 +70,21 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'public'), // Copy everything from 'public'
+          to: path.resolve(__dirname, 'dist'), // To the 'dist' directory
+          globOptions: {
+            ignore: ['**/index.html'], // Ignore index.html if you're using HtmlWebpackPlugin
+          },
+        },
+        {
+          from: path.resolve(__dirname, 'public', 'index.html'), // Copy index.html
+          to: path.resolve(__dirname, 'dist', 'index.html'),
+        },
+      ],
+    }),
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
@@ -77,4 +93,7 @@ module.exports = {
       swDest: 'service-worker.js',
     }),
   ],
+  stats: {
+    errorDetails: true,
+  },
 };
