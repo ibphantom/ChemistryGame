@@ -1,3 +1,5 @@
+<!-- src/App.vue -->
+
 <template>
   <div id="app">
     <!-- Canvas for three.js -->
@@ -19,7 +21,7 @@ export default defineComponent({
   name: 'App',
   components: {
     PeriodicTable,
-    ReactionLab
+    ReactionLab,
   },
   setup() {
     onMounted(() => {
@@ -27,7 +29,7 @@ export default defineComponent({
       const game = new Game(canvas);
       game.start();
     });
-  }
+  },
 });
 </script>
 
