@@ -4,8 +4,8 @@
     "products": ["H2O"],
     "conditions": {
       "catalyst": null,
-      "temperature": "high",
-      "pressure": "normal"
+      "temperature": 500,
+      "pressure": 1
     }
   },
   {
@@ -13,8 +13,8 @@
     "products": ["CO2"],
     "conditions": {
       "catalyst": null,
-      "temperature": "high",
-      "pressure": "normal"
+      "temperature": 600,
+      "pressure": 1
     }
   }
 ]
