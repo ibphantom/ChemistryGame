@@ -1,3 +1,5 @@
+// src/main.ts
+
 import { createApp } from 'vue';
 import App from './App.vue';
 
@@ -11,10 +13,10 @@ app.mount('#app');
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/service-worker.js')
-    .then(reg => {
+    .then((reg) => {
       console.log('Service Worker registered: ', reg);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log('Service Worker registration failed: ', err);
     });
 }
