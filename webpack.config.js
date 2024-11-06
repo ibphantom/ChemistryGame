@@ -13,6 +13,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
+  experiments: {
+    topLevelAwait: true,
+  },
   resolve: {
     extensions: ['.ts', '.js', '.vue', '.json'],
     alias: {
@@ -56,24 +59,13 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|glb|gltf)$/,
         type: 'asset/resource',
       },
-      // Worker Loader
+      // Web Worker Loader (built-in)
       {
         test: /\.worker\.ts$/,
-        use: [
-          {
-            loader: 'worker-loader',
-            options: {
-              filename: '[name].[contenthash].js',
-              esModule: false,
-            },
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-            },
-          },
-        ],
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+        },
       },
     ],
   },
