@@ -3,6 +3,7 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/main.ts',
@@ -14,13 +15,13 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.vue'],
     alias: {
+      vue$: 'vue/dist/vue.esm-bundler.js',
       '@': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'public/assets'),
     },
   },
   module: {
     rules: [
-      // TypeScript and Vue handling
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -31,15 +32,13 @@ module.exports = {
         options: { appendTsSuffixTo: [/\.vue$/] },
         exclude: /node_modules/,
       },
-      // Asset handling
       {
-        test: /\.(png|jpe?g|gif|svg|mp3|glb|gltf)$/,
+        test: /\.(png|jpg|gif|svg|mp3|glb|gltf)$/,
         type: 'asset/resource',
         generator: {
           filename: 'assets/[name][ext]',
         },
       },
-      // Web Worker handling
       {
         test: /\.worker\.ts$/,
         use: [
@@ -50,6 +49,10 @@ module.exports = {
           'ts-loader',
         ],
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['vue-style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
   },
   plugins: [
@@ -57,7 +60,12 @@ module.exports = {
     new GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       navigateFallback: '/index.html',
+    }),
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
     }),
   ],
   devServer: {
