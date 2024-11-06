@@ -1,6 +1,7 @@
+<!-- src/components/PeriodicTable.vue -->
+
 <template>
   <div class="periodic-table">
-    <!-- Render elements -->
     <div
       v-for="element in elements"
       :key="element.atomicNumber"
@@ -30,15 +31,15 @@ export default defineComponent({
   name: 'PeriodicTable',
   data() {
     return {
-      elements: elementsData as ElementData[]
+      elements: elementsData as ElementData[],
     };
   },
   methods: {
     selectElement(element: ElementData) {
       // Emit event to add atom to the scene
       this.$emit('add-atom', element);
-    }
-  }
+    },
+  },
 });
 </script>
 
@@ -55,5 +56,6 @@ export default defineComponent({
   margin: 2px;
   cursor: pointer;
   color: #fff;
+  user-select: none;
 }
 </style>
