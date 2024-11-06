@@ -19,7 +19,7 @@ An educational chemistry game built with TypeScript, Vue.js, three.js, Web Worke
 
 ## Installation
 
-### 1. Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/yourusername/chemistry-game.git
