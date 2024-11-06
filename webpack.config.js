@@ -1,5 +1,3 @@
-// webpack.config.js
-
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const { GenerateSW } = require('workbox-webpack-plugin');
@@ -10,13 +8,10 @@ module.exports = {
   mode: 'production',
   entry: './src/main.ts',
   output: {
-    filename: 'bundle.js', // Since your index.html references 'bundle.js'
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     clean: true,
-  },
-  experiments: {
-    topLevelAwait: true,
   },
   resolve: {
     extensions: ['.ts', '.js', '.vue', '.json'],
@@ -38,14 +33,9 @@ module.exports = {
         exclude: /node_modules/,
         use: 'ts-loader',
       },
-      // CSS Loader
+      // CSS and SASS Loaders
       {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader'],
-      },
-      // SCSS/SASS Loader
-      {
-        test: /\.s[ac]ss$/i,
+        test: /\.s?css$/,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
       // Asset Loader
@@ -79,7 +69,7 @@ module.exports = {
           from: path.resolve(__dirname, 'public'),
           to: path.resolve(__dirname, 'dist'),
           globOptions: {
-            ignore: ['**/index.html'], // Ignore index.html if it's handled by HtmlWebpackPlugin
+            ignore: ['**/index.html'], // We handle index.html separately
           },
         },
         {
