@@ -1,6 +1,5 @@
 // src/helpers/PhysicsEngine.ts
 
-// Import the worker as a module
 import PhysicsWorker from '@/workers/PhysicsWorker.worker.ts';
 
 export class PhysicsEngine {
@@ -13,7 +12,6 @@ export class PhysicsEngine {
 
   start() {
     this.init();
-    // Additional initialization code if needed
   }
 
   init() {
@@ -26,6 +24,6 @@ export class PhysicsEngine {
 
   private onWorkerMessage = (event: MessageEvent) => {
     const data = event.data;
-    // Update objects in the scene with new physics data
+    // Handle data from worker
   };
 }
