@@ -1,0 +1,27 @@
+[
+  {
+    "atomicNumber": 1,
+    "symbol": "H",
+    "name": "Hydrogen",
+    "color": "#FFFFFF",
+    "radius": 0.25,
+    "valency": 1
+  },
+  {
+    "atomicNumber": 6,
+    "symbol": "C",
+    "name": "Carbon",
+    "color": "#000000",
+    "radius": 0.7,
+    "valency": 4
+  },
+  {
+    "atomicNumber": 8,
+    "symbol": "O",
+    "name": "Oxygen",
+    "color": "#FF0D0D",
+    "radius": 0.6,
+    "valency": 2
+  }
+  // ... Add more elements as needed
+]
