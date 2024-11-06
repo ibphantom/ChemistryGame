@@ -1,10 +1,11 @@
 // src/core/Loader.ts
 
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 export class Loader {
   private textureLoader = new THREE.TextureLoader();
-  private gltfLoader = new THREE.GLTFLoader();
+  private gltfLoader = new GLTFLoader();
 
   loadTexture(path: string): Promise<THREE.Texture> {
     return new Promise((resolve) => {
