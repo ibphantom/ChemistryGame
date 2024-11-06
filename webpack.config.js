@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: './src/main.ts', // Change the entry point
+  entry: './src/main.ts',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -31,19 +31,22 @@ module.exports = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/],
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+              transpileOnly: true, // Add this line if necessary
+            },
           },
-        },
+        ],
       },
       // CSS Loader
       {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader'],
       },
-      // SCSS/SASS Loader (if you have SCSS/SASS files)
+      // SCSS/SASS Loader
       {
         test: /\.s[ac]ss$/i,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
@@ -56,7 +59,13 @@ module.exports = {
       // Worker Loader
       {
         test: /\.worker\.ts$/,
-        use: { loader: 'worker-loader' },
+        use: {
+          loader: 'worker-loader',
+          options: {
+            filename: '[name].[contenthash].js',
+            esModule: false, // Ensure compatibility
+          },
+        },
       },
     ],
   },
