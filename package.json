@@ -30,8 +30,8 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.0",
-    "copy-webpack-plugin": "^11.0.0", // Added copy-webpack-plugin
-    "worker-loader": "^4.0.2" // Added worker-loader if not already present
+    "copy-webpack-plugin": "^11.0.0",
+    "worker-loader": "^4.0.2"
   },
   "author": "",
   "license": "MIT"
