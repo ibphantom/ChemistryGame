@@ -1,10 +1,13 @@
 // src/helpers/PhysicsEngine.ts
 
+// Import the worker as a module
+import PhysicsWorker from '@/workers/PhysicsWorker.worker.ts';
+
 export class PhysicsEngine {
   private worker: Worker;
 
   constructor() {
-    this.worker = new Worker(new URL('@/workers/PhysicsWorker.worker.ts', import.meta.url));
+    this.worker = new PhysicsWorker();
     this.worker.onmessage = this.onWorkerMessage;
   }
 
