@@ -10,10 +10,10 @@ module.exports = {
   mode: 'production',
   entry: './src/main.ts',
   output: {
-    filename: 'bundle.js', // Keep the filename as 'bundle.js' since your index.html references it
+    filename: 'bundle.js', // Since your index.html references 'bundle.js'
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    clean: true, // Clean the output directory before emit
+    clean: true,
   },
   experiments: {
     topLevelAwait: true,
@@ -50,8 +50,11 @@ module.exports = {
       },
       // Asset Loader
       {
-        test: /\.(png|jpe?g|gif|svg|glb|gltf)$/,
+        test: /\.(png|jpe?g|gif|svg|glb|gltf|json)$/,
         type: 'asset/resource',
+        generator: {
+          filename: 'assets/[hash][ext][query]',
+        },
       },
       // Web Worker Loader
       {
@@ -73,14 +76,14 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'public'), // Copy everything from 'public'
-          to: path.resolve(__dirname, 'dist'), // To the 'dist' directory
+          from: path.resolve(__dirname, 'public'),
+          to: path.resolve(__dirname, 'dist'),
           globOptions: {
-            ignore: ['**/index.html'], // Ignore index.html if you're using HtmlWebpackPlugin
+            ignore: ['**/index.html'], // Ignore index.html if it's handled by HtmlWebpackPlugin
           },
         },
         {
-          from: path.resolve(__dirname, 'public', 'index.html'), // Copy index.html
+          from: path.resolve(__dirname, 'public', 'index.html'),
           to: path.resolve(__dirname, 'dist', 'index.html'),
         },
       ],
