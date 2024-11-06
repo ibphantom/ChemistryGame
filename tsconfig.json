@@ -1,5 +1,3 @@
-// tsconfig.json
-
 {
   "compilerOptions": {
     "target": "esnext",
@@ -13,11 +11,12 @@
     "strict": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "types": ["webpack-env"],
     "paths": {
       "@/*": ["src/*"],
       "@assets/*": ["public/assets/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.json"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.json", "src/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
