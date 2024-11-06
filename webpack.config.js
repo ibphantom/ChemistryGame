@@ -6,28 +6,67 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  // ... (rest of your config)
+  mode: 'production',
+  entry: './src/main.ts', // Updated entry point
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+  },
+  resolve: {
+    extensions: ['.ts', '.js', '.vue', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@assets': path.resolve(__dirname, 'public/assets'),
+    },
+  },
   module: {
     rules: [
-      // ... (other rules)
+      // Vue Loader
       {
         test: /\.vue$/,
         loader: 'vue-loader',
       },
+      // TypeScript Loader
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+          transpileOnly: true,
+        },
+      },
+      // CSS Loader
       {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader'],
       },
+      // SCSS/SASS Loader
       {
         test: /\.s[ac]ss$/i,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
-      // ... (other rules)
+      // Asset Loader
+      {
+        test: /\.(png|jpg|gif|svg|glb|gltf)$/,
+        type: 'asset/resource',
+      },
+      // Worker Loader
+      {
+        test: /\.worker\.ts$/,
+        use: { loader: 'worker-loader' },
+      },
     ],
   },
   plugins: [
     new VueLoaderPlugin(),
-    // ... (other plugins)
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+    }),
+    new GenerateSW({
+      swDest: 'service-worker.js',
+    }),
   ],
-  // ... (rest of your config)
 };
