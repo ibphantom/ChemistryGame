@@ -1,3 +1,5 @@
+// src/components/Molecule.ts
+
 import * as THREE from 'three';
 import { Atom } from './Atom';
 import { Bond } from './Bond';
@@ -15,15 +17,15 @@ export class Molecule extends THREE.Group {
     this.add(atom);
   }
 
-  addBond(atom1: Atom, atom2: Atom, bondType: 'single' | 'double' | 'triple' = 'single') {
-    const bond = new Bond(atom1, atom2, bondType);
+  addBond(atom1: Atom, atom2: Atom) {
+    const bond = new Bond(atom1, atom2);
     this.bonds.push(bond);
     this.add(bond);
   }
 
   removeAtom(atom: Atom) {
     // Remove bonds associated with the atom
-    this.bonds = this.bonds.filter(bond => {
+    this.bonds = this.bonds.filter((bond) => {
       if (bond.atom1 === atom || bond.atom2 === atom) {
         this.remove(bond);
         return false;
@@ -32,13 +34,13 @@ export class Molecule extends THREE.Group {
     });
 
     // Remove the atom
-    this.atoms = this.atoms.filter(a => a !== atom);
+    this.atoms = this.atoms.filter((a) => a !== atom);
     this.remove(atom);
   }
 
   getFormula(): string {
     const elementCounts: { [key: string]: number } = {};
-    this.atoms.forEach(atom => {
+    this.atoms.forEach((atom) => {
       const symbol = atom.elementData.symbol;
       elementCounts[symbol] = (elementCounts[symbol] || 0) + 1;
     });
