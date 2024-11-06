@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: './src/main.ts', // Updated entry point
+  entry: './src/main.ts', // Change the entry point
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -43,7 +43,7 @@ module.exports = {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader'],
       },
-      // SCSS/SASS Loader
+      // SCSS/SASS Loader (if you have SCSS/SASS files)
       {
         test: /\.s[ac]ss$/i,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
