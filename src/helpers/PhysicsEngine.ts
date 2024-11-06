@@ -8,6 +8,11 @@ export class PhysicsEngine {
     this.worker.onmessage = this.onWorkerMessage;
   }
 
+  start() {
+    this.init();
+    // Additional initialization code if needed
+  }
+
   init() {
     this.worker.postMessage({ action: 'init' });
   }
