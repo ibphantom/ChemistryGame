@@ -31,10 +31,11 @@ module.exports = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-          transpileOnly: true,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/],
+          },
         },
       },
       // CSS Loader
@@ -49,7 +50,7 @@ module.exports = {
       },
       // Asset Loader
       {
-        test: /\.(png|jpg|gif|svg|glb|gltf)$/,
+        test: /\.(png|jpe?g|gif|svg|glb|gltf)$/,
         type: 'asset/resource',
       },
       // Worker Loader
