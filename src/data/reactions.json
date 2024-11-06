@@ -1,0 +1,21 @@
+[
+  {
+    "reactants": ["H2", "O2"],
+    "products": ["H2O"],
+    "conditions": {
+      "catalyst": null,
+      "temperature": "high",
+      "pressure": "normal"
+    }
+  },
+  {
+    "reactants": ["C", "O2"],
+    "products": ["CO2"],
+    "conditions": {
+      "catalyst": null,
+      "temperature": "high",
+      "pressure": "normal"
+    }
+  }
+  // Add more reactions as needed
+]
